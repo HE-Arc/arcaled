@@ -1,23 +1,108 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+
+// Views
+import AccountValidation from "../views/AccountValidation/AccountValidation.vue";
+import AccountsWaiting from "../views/AccountsWaiting/AccountsWaiting.vue";
+import AccountDemand from "../views/AccountDemand/AccountDemand.vue";
+import AddCP from "../views/AddCP/AddCP.vue";
+import CPS from "../views/CPS/CPS.vue";
+import EmailVerification from "../views/EmailVerification/EmailVerification.vue";
+import Login from "../views/Login/Login.vue";
+import PageNotFound from "../views/PageNotFound/PageNotFound.vue";
+
+// Layouts
+import AppLayout from "../layouts/AppLayout.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      name: "home",
-      component: HomeView,
+      name: "account-demand",
+      component: AccountDemand,
     },
     {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import("../views/AboutView.vue"),
+      path: "/login",
+      name: "login",
+      component: Login,
+    },
+    {
+      path: "/email-verification",
+      name: "email-verification",
+      component: EmailVerification,
+    },
+    {
+      path: "/app",
+      name: "app",
+      component: AppLayout,
+      meta: {
+        requiresAuth: true,
+      },
+      children: [
+        {
+          path: "",
+          name: "cps",
+          component: CPS,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: "account-validation",
+          name: "account-validation",
+          component: AccountValidation,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: "accounts-waiting",
+          name: "accounts-waiting",
+          component: AccountsWaiting,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: "add-cp",
+          name: "add-cp",
+          component: AddCP,
+          meta: {
+            requiresAuth: true,
+          },
+        },
+      ],
+    },
+
+    // and finally the default route, when none of the above matches:
+    {
+      path: "/:pathMatch(.*)*",
+      name: "PageNotFound",
+      component: PageNotFound,
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  // const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  // const isAuthenticated = userStore().user;
+
+  // // redirige / vers /auth
+  // if (to.path === "/") {
+  //     if (isAuthenticated) {
+  //         next({ name: "items" });
+  //     } else {
+  //         next({ name: "auth" });
+  //     }
+  // }
+
+  // if (requiresAuth && !isAuthenticated) {
+  //     next({ name: "auth" });
+  // } else {
+  //     next();
+  // }
+
+  next();
 });
 
 export default router;
