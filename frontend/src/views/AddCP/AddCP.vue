@@ -43,7 +43,7 @@ const onReset = () => {
 </script>
 
 <template>
-  <q-page>
+  <q-page padding>
     <q-card class="q-mb-md">
       <q-card-section class="bg-primary text-white">
         <div class="text-h6">Informations importantes</div>

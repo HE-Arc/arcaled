@@ -1,8 +1,10 @@
-<script setup></script>
+<script setup>
+import { APP_NAME } from "../../constants";
+</script>
 
 <template>
   <div class="row items-center q-mb-md">
-    <h2 class="text-h4 q-mr-md">Bienvenue sur ArcAled</h2>
+    <h2 class="text-h4 q-mr-md">Bienvenue sur {{ APP_NAME }}</h2>
   </div>
 
   <q-card class="q-mb-md">

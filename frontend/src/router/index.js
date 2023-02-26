@@ -34,7 +34,7 @@ const router = createRouter({
     {
       path: "/app",
       name: "app",
-      component: AppLayout,
+      // component: When empty, will use the parent layout component,
       meta: {
         requiresAuth: true,
       },

@@ -10,8 +10,17 @@ updated by : Lucas Perrin
 <script setup></script>
 
 <template>
-  <div>
-    <h1>Page Not Found</h1>
-    <p>Page Not Found</p>
-  </div>
+  <q-page padding>
+    <div>
+      <h1>Page Not Found</h1>
+      <p>Page Not Found</p>
+    </div>
+    <q-btn
+      :to="{
+        name: 'cps',
+      }"
+    >
+      <q-icon name="home" />
+    </q-btn>
+  </q-page>
 </template>

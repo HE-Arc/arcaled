@@ -1,4 +1,4 @@
-import GlobalLayout from "./layouts/GlobalLayout.vue";
+import AppLayout from "./layouts/AppLayout.vue";
 import router from "./router";
 
 import { createApp } from "vue";
@@ -15,7 +15,7 @@ const pinia = createPinia();
 // persist the state of the stores in the localStorage (or sessionStorage)
 pinia.use(piniaPluginPersistedstate);
 
-const app = createApp(GlobalLayout); // GlobalLayout is the default layout
+const app = createApp(AppLayout); // AppLayout is the default layout
 app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
   lang: quasarLang,

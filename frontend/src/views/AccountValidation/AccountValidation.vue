@@ -10,8 +10,10 @@ updated by : Rui Marco Loureiro
 <script setup></script>
 
 <template>
-  <div>
-    <h1>Account Validation</h1>
-    <p>Account Validation</p>
-  </div>
+  <q-page padding>
+    <div>
+      <h1>Account Validation</h1>
+      <p>Account Validation</p>
+    </div>
+  </q-page>
 </template>

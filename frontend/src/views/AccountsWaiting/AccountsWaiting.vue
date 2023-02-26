@@ -70,35 +70,33 @@ const colorLabel = (status) => {
 </script>
 
 <template>
-  <q-layout>
-    <q-page-container class="q-pa-md" style="max-width: 1000px; margin: 0 auto">
-      <q-card class="q-mb-md">
-        <q-card-section class="bg-primary text-white">
-          <div class="text-h6">Liste des comptes en attente de validation</div>
-        </q-card-section>
+  <q-page class="q-pa-md" style="max-width: 1000px; margin: 0 auto">
+    <q-card class="q-mb-md">
+      <q-card-section class="bg-primary text-white">
+        <div class="text-h6">Liste des comptes en attente de validation</div>
+      </q-card-section>
 
-        <!-- A list of accounts that are waiting for validation, 3 columns : Numéro, Status and Date -->
-        <q-table
-          title="Comptes en attente"
-          :rows="rows"
-          :columns="columns"
-          row-key="id"
-        />
+      <!-- A list of accounts that are waiting for validation, 3 columns : Numéro, Status and Date -->
+      <q-table
+        title="Comptes en attente"
+        :rows="rows"
+        :columns="columns"
+        row-key="id"
+      />
 
-        <template v-slot:body="props">
-          <q-tr :props="props" @click="onRowClick(props.row)">
-            <q-td key="id" :props="props">
-              {{ props.row.id }}
-            </q-td>
-            <q-td key="status" :props="props">
-              {{ props.row.status }}
-            </q-td>
-            <q-td key="date" :props="props">
-              {{ props.row.date }}
-            </q-td>
-          </q-tr>
-        </template>
-      </q-card>
-    </q-page-container>
-  </q-layout>
+      <template v-slot:body="props">
+        <q-tr :props="props" @click="onRowClick(props.row)">
+          <q-td key="id" :props="props">
+            {{ props.row.id }}
+          </q-td>
+          <q-td key="status" :props="props">
+            {{ props.row.status }}
+          </q-td>
+          <q-td key="date" :props="props">
+            {{ props.row.date }}
+          </q-td>
+        </q-tr>
+      </template>
+    </q-card>
+  </q-page>
 </template>
