@@ -1,3 +1,12 @@
+<!--
+ArcAled made by Lucas Perrin, Rui Marco Loureiro and Sebastien Chappuis
+File's version : 1.0
+this file is used for : login page
+
+Wrote by : Rui Marco Loureiro
+updated by : Rui Marco Loureiro
+-->
+
 <script setup>
 import { ref, computed } from "vue";
 
