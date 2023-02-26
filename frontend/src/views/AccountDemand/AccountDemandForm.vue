@@ -1,9 +1,13 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const model = ref(null);
 const email = ref("");
 const accept = ref(false);
+
+const formIsValid = computed(() => {
+  return email.value && accept.value && model.value;
+});
 
 const onSubmit = () => {
   if (model.value && email.value && accept.value) {
@@ -12,7 +16,7 @@ const onSubmit = () => {
 };
 
 const onReset = () => {
-  model.value = "";
+  model.value = null;
   email.value = "";
   accept.value = false;
 };
@@ -20,7 +24,7 @@ const onReset = () => {
 
 <template>
   <q-card class="q-mb-md">
-    <q-card-section>
+    <q-card-section class="bg-primary text-white">
       <div class="text-h6">Formulaire d'inscription</div>
     </q-card-section>
 
@@ -56,7 +60,12 @@ const onReset = () => {
         />
 
         <q-card-actions align="right">
-          <q-btn label="Vérification du mail" type="submit" color="primary" />
+          <q-btn
+            label="Vérification du mail"
+            type="submit"
+            color="primary"
+            :disabled="!formIsValid"
+          />
           <q-btn
             label="Réinitialiser"
             type="reset"

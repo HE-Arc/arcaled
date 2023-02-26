@@ -6,7 +6,7 @@
   </div>
 
   <q-card class="q-mb-md">
-    <q-card-section>
+    <q-card-section class="bg-primary text-white">
       <div class="text-h6">Procédure de création d'un compte</div>
     </q-card-section>
 
