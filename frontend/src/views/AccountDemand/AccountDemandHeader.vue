@@ -14,7 +14,7 @@ import { APP_NAME } from "../../constants";
 
     <q-card-section>
       <q-list>
-        <q-item clickable v-ripple>
+        <q-item>
           <q-item-section avatar>
             <q-icon name="photo_camera" color="teal" />
           </q-item-section>
@@ -23,7 +23,7 @@ import { APP_NAME } from "../../constants";
             étudiante de manière visible (nom + prénom + photo)</q-item-section
           >
         </q-item>
-        <q-item clickable v-ripple>
+        <q-item>
           <q-item-section avatar>
             <q-icon name="warning" color="warning" />
           </q-item-section>
