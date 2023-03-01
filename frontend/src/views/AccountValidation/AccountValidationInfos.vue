@@ -1,8 +1,16 @@
 <script setup>
+import { ref } from "vue";
+
 let demand = {
   id: 1,
   number: "123456789",
   email: "test@he-arc.ch",
+};
+
+let confirm = ref(false);
+
+const onClose = (n) => {
+  console.log("n", n);
 };
 </script>
 
@@ -49,7 +57,23 @@ let demand = {
     </q-card-section>
 
     <q-card-actions align="right">
-      <q-btn color="red" icon="close" />
+      <q-btn color="red" icon="close">
+        <q-menu>
+          <q-list>
+            <q-item
+              v-for="n in 5"
+              :key="n"
+              v-close-popup="n > 0"
+              :clickable="n > 0"
+              :disable="!confirm"
+              @click="onClose(n)"
+            >
+              <q-item-section>Reason {{ n }}</q-item-section>
+            </q-item>
+          </q-list>
+          <q-toggle v-model="confirm" label="Enable this to make your choice" />
+        </q-menu>
+      </q-btn>
       <q-btn color="green" icon="check" />
     </q-card-actions>
   </q-card>
