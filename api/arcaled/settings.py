@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-ue1x8ds$+82pm=3*h0^^t9v50lyv%q$8-h)1t$4(9j38^gdk19
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# following this tutorial https://dzone.com/articles/how-to-fix-django-cors-error
+# Added following this tutorial https://dzone.com/articles/how-to-fix-django-cors-error
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -42,9 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'corsheaders',
     'rest_framework',
+    'corsheaders',  # Added for CORS
+    'drf_spectacular',  # Added for SWAGGER
+    'django.contrib.staticfiles',
     'arcaledapp',
 ]
 
@@ -132,3 +133,22 @@ STATIC_URL = 'api/static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# -------------- SWAGGER --------------
+# Following this tutorial https://appliku.com/post/django-rest-framework-openapi-3 at the "Setting up drf-spectacular" section
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',  # Added for SWAGGER
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'ArcAled',
+    'DESCRIPTION': 'ArcAled API Documentation',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True
+    # OTHER SETTINGS
+}
+
+# -------------- END SWAGGER --------------

@@ -32,5 +32,25 @@ export const useStore = defineStore(storeName, {
         this.loading = false;
       }
     },
+    async addCP({ branch, teacher, year, content }) {
+      this.loading = true;
+
+      try {
+        const response = await axios.post(`${API_LOCATION}/exams/`, {
+          branch,
+          teacher,
+          year,
+          content,
+        });
+
+        const data = response.data;
+
+        return data;
+      } catch (error) {
+        this.error = error;
+      } finally {
+        this.loading = false;
+      }
+    },
   },
 });
