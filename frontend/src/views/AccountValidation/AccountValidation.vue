@@ -7,13 +7,12 @@ Wrote by : Rui Marco Loureiro
 updated by : Rui Marco Loureiro
 -->
 
-<script setup></script>
+<script setup>
+import AccountValidationInfos from "./AccountValidationInfos.vue";
+</script>
 
 <template>
-  <q-page padding>
-    <div>
-      <h1>Account Validation</h1>
-      <p>Account Validation</p>
-    </div>
+  <q-page class="q-pa-md" style="max-width: 1000px; margin: 0 auto">
+    <AccountValidationInfos />
   </q-page>
 </template>
