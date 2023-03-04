@@ -51,7 +51,7 @@ const onReset = () => {
 
       <q-card-section>
         <q-list>
-          <q-item clickable v-ripple>
+          <q-item>
             <q-item-section avatar>
               <q-icon name="document_scanner" color="teal" />
             </q-item-section>
@@ -61,7 +61,7 @@ const onReset = () => {
               ></q-item-section
             >
           </q-item>
-          <q-item clickable v-ripple>
+          <q-item>
             <q-item-section avatar>
               <q-icon name="warning" color="warning" />
             </q-item-section>
