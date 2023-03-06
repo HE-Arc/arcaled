@@ -19,14 +19,14 @@ class Teacher(models.Model):
         return self.name
 
 class Lesson(models.Model):
-    branch = models.ForeignKey('Branch', on_delete=models.CASCADE)
-    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE)
+    branch = models.ForeignKey('Branch', on_delete=models.CASCADE, related_name='lesson')
+    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, related_name='lesson')
     year = models.DateField()
     def __str__(self):
         return self.branch.label + ' - ' + self.teacher.name + ' - ' + self.year.strftime('%Y')
 
 class Exam(models.Model):
-    lesson = models.ForeignKey('Lesson', on_delete=models.CASCADE)
+    lesson = models.ForeignKey('Lesson', on_delete=models.CASCADE, related_name='exam')
     content = models.FileField(upload_to='exam_contents/')
     def __str__(self):
         return 'Exam of ' + str(self.lesson)
