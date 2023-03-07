@@ -105,6 +105,24 @@ const groupedCps = computed(() => {
     return filteredCps.value;
   }
 });
+
+const filename = (url) => {
+  return url.split("/").pop();
+};
+
+const download = (url) => {
+  console.log(url);
+
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.setAttribute("download", filename(url));
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
+};
 </script>
 
 <template>
@@ -212,14 +230,21 @@ const groupedCps = computed(() => {
           </q-item-label>
 
           <!-- Ungrouped -->
-          <q-item v-for="{ branch, teacher, year } in group">
+          <q-item v-for="{ branch, teacher, year, content } in group">
             <q-item-section>
               <q-item-label
                 >{{ branch }} - {{ teacher }} - {{ year }}</q-item-label
               >
             </q-item-section>
             <q-item-section side>
-              <q-btn size="12px" flat dense round icon="download" />
+              <q-btn
+                size="12px"
+                flat
+                dense
+                round
+                icon="download"
+                @click="download(content)"
+              />
             </q-item-section>
           </q-item>
         </template>

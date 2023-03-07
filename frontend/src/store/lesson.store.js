@@ -18,9 +18,23 @@ export const useStore = defineStore(storeName, {
       try {
         const response = await axios.get(`${API_LOCATION}/lessons/`);
 
-        const { data } = response.data;
+        const lessons = await Promise.all(
+          response.data.map(async (lesson) => {
+            const branch = await axios.get(lesson.branch);
+            const teacher = await axios.get(lesson.teacher);
 
-        return data;
+            return {
+              ...lesson,
+              branch: branch.data,
+              teacher: teacher.data,
+              label: `${branch.data.label} - ${teacher.data.name} - ${new Date(
+                lesson.year
+              ).getFullYear()}`,
+            };
+          })
+        );
+
+        return lessons;
       } catch (error) {
         this.error = error;
       } finally {
