@@ -1,6 +1,7 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 import { API_LOCATION } from "../constants";
+import { Notify } from "quasar";
 
 const storeName = "examStore";
 const defautSate = {
@@ -58,6 +59,13 @@ export const useStore = defineStore(storeName, {
         return exams;
       } catch (error) {
         this.error = error;
+
+        Notify.create({
+          message: "Erreur lors de la récupération des CPs",
+          color: "negative",
+          position: "top",
+          timeout: 2000,
+        });
       } finally {
         this.loading = false;
       }
@@ -71,8 +79,21 @@ export const useStore = defineStore(storeName, {
         formdata.append("content", content);
 
         const response = await axios.post(`${API_LOCATION}/exams/`, formdata);
+
+        Notify.create({
+          message: "CP ajouté avec succès",
+          color: "positive",
+          position: "top",
+          timeout: 2000,
+        });
       } catch (error) {
         this.error = error;
+        Notify.create({
+          message: "Erreur lors de l'ajout du CP",
+          color: "negative",
+          position: "top",
+          timeout: 2000,
+        });
       } finally {
         this.loading = false;
       }

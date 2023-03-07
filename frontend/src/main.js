@@ -3,7 +3,7 @@ import router from "./router";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import { Quasar } from "quasar";
+import { Quasar, Notify } from "quasar";
 import quasarLang from "quasar/lang/fr";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 // Import icon libraries
@@ -17,7 +17,9 @@ pinia.use(piniaPluginPersistedstate);
 
 const app = createApp(AppLayout); // AppLayout is the default layout
 app.use(Quasar, {
-  plugins: {}, // import Quasar plugins and add here
+  plugins: {
+    Notify,
+  }, // import Quasar plugins and add here
   lang: quasarLang,
 });
 app.use(pinia);
