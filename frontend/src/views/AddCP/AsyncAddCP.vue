@@ -10,67 +10,42 @@ updated by : Lucas Perrin
 <script setup>
 import { ref, computed } from "vue";
 import { storeToRefs } from "pinia";
-import { useStore as useTeacherStore } from "../../store/teacher.store";
-import { useStore as useBranchStore } from "../../store/branch.store";
 import { useStore as useLessonStore } from "../../store/lesson.store";
 import { useStore as useExamStore } from "../../store/exam.store";
 
-const teacherStore = useTeacherStore();
-const branchStore = useBranchStore();
 const lessonStore = useLessonStore();
 const cpsStore = useExamStore();
 
-const { error: errorTeacher } = storeToRefs(teacherStore);
-const { error: errorBranch } = storeToRefs(branchStore);
 const { error: errorLesson } = storeToRefs(lessonStore);
 const { error: errorCps } = storeToRefs(cpsStore);
 
-const BRANCH_LABEL = "Branche";
-const TEACHER_LABEL = "Prof";
-const YEAR_LABEL = "Année";
+const lesson = ref(null);
+const content = ref(null);
 
-const actualYear = new Date().getFullYear();
-
-const file = ref(null);
-const branch = ref(null);
-const teacher = ref(null);
-const year = ref(actualYear);
-
-// const branchs = [
-//   "3250.2 Cryptographie",
-//   "3258.1 Sécurité informatique",
-//   "3292.2 Outils d'infographie",
-// ];
-const branchs = (await branchStore.getAllBranches()).map(
-  (branch) => branch.label
-);
-// const teachers = ["NMA", "MAS", "BLC"];
-const teachers = (await teacherStore.getAllTeachers()).map(
-  (teacher) => teacher.name
-);
-// const years = ["2022", "2023", "2024"];
-const years = await lessonStore.getAllYears();
+const lessons = await lessonStore.getAllLesson();
 
 const formIsValid = computed(() => {
-  return branch.value && teacher.value && year.value && file.value;
+  return lesson.value && content.value;
 });
 
 const onSubmit = () => {
-  if (branch.value && teacher.value && year.value && file.value) {
-    alert("Form submitted!");
+  if (lesson.value && content.value) {
+    cpsStore.addCP({
+      lesson: lesson.value,
+      content: content.value,
+    });
   }
 };
 
 const onReset = () => {
-  model.value = null;
-  email.value = "";
-  accept.value = false;
+  lesson.value = null;
+  content.value = null;
 };
 </script>
 
 <template>
   <q-page padding>
-    <div v-if="errorTeacher || errorBranch || errorLesson || errorCps">
+    <div v-if="errorLesson || errorCps">
       <q-card>
         <q-card-section>
           <div class="text-h6">Erreur</div>
@@ -118,7 +93,13 @@ const onReset = () => {
 
       <q-card-section>
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-          <q-select v-model="branch" :options="branchs" label="Branche">
+          <q-select
+            v-model="lesson"
+            :options="lessons"
+            option-value="id"
+            option-label="label"
+            label="Leçon"
+          >
             <template v-slot:append>
               <q-icon
                 name="close"
@@ -128,29 +109,9 @@ const onReset = () => {
             </template>
           </q-select>
 
-          <q-select v-model="teacher" :options="teachers" label="Prof">
-            <template v-slot:append>
-              <q-icon
-                name="close"
-                @click.stop.prevent="teacher = null"
-                class="cursor-pointer"
-              />
-            </template>
-          </q-select>
-
-          <q-select v-model="year" :options="years" label="Année">
-            <template v-slot:append>
-              <q-icon
-                name="close"
-                @click.stop.prevent="year = null"
-                class="cursor-pointer"
-              />
-            </template>
-          </q-select>
-
           <q-file
             outlined
-            v-model="file"
+            v-model="content"
             label="CP"
             accept="image/*, .pdf, .png, .jpg, .jpeg"
           >
