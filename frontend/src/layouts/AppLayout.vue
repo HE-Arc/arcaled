@@ -7,16 +7,25 @@ import { APP_NAME, FOOTER_TEXT } from "./../constants";
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-toolbar-title>
-          <q-btn
-            flat
-            :to="{
-              name: 'cps',
-            }"
-          >
-            {{ APP_NAME }}</q-btn
-          >
-        </q-toolbar-title>
+        <div class="row fit items-center">
+          <div class="col">
+            <q-toolbar-title>
+              <q-btn
+                flat
+                :to="{
+                  name: 'cps',
+                }"
+              >
+                {{ APP_NAME }}</q-btn
+              >
+            </q-toolbar-title>
+          </div>
+
+          <div class="col-md-auto">
+            <q-toolbar-title> Ratio 5 </q-toolbar-title>
+          </div>
+          <div class="col"></div>
+        </div>
       </q-toolbar>
     </q-header>
 
