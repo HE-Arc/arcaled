@@ -1,6 +1,7 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 import { API_LOCATION } from "../constants";
+import { Notify } from "quasar";
 
 const storeName = "brancheStore";
 const defautSate = {
@@ -23,6 +24,33 @@ export const useStore = defineStore(storeName, {
         return data;
       } catch (error) {
         this.error = error;
+      } finally {
+        this.loading = false;
+      }
+    },
+    async addBranch(branch) {
+      this.loading = true;
+
+      try {
+        const response = await axios.post(`${API_LOCATION}/branches/`, branch);
+
+        const data = response.data;
+        Notify.create({
+          message: "Branche ajoutée avec succès",
+          color: "positive",
+          position: "top",
+          timeout: 2000,
+        });
+
+        return data;
+      } catch (error) {
+        this.error = error;
+        Notify.create({
+          message: "Erreur lors de l'ajout de la branche",
+          color: "negative",
+          position: "top",
+          timeout: 2000,
+        });
       } finally {
         this.loading = false;
       }
