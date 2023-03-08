@@ -86,10 +86,21 @@ const onReset = () => {
       </q-card-section>
     </q-card>
 
-    <q-card class="q-mb-md">
-      <q-card-section class="bg-primary text-white">
-        <div class="text-h6">Ajout d'un CP</div>
-      </q-card-section>
+    <q-card>
+      <q-toolbar class="bg-primary text-white shadow-2">
+        <q-toolbar-title>Ajout d'un CP</q-toolbar-title>
+        <q-btn
+          flat
+          dense
+          borderless
+          icon="add"
+          class="q-mr-xs"
+          :to="{
+            name: 'add-lesson',
+          }"
+          >Ajouter une leçon
+        </q-btn>
+      </q-toolbar>
 
       <q-card-section>
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">

@@ -16,6 +16,42 @@ const { error: errorBranch } = storeToRefs(branchStore);
 const { error: errorLesson } = storeToRefs(lessonStore);
 const { error: errorCps } = storeToRefs(cpsStore);
 
+let tab = ref("Branches");
+const newBranch = ref(null);
+const newTeacher = ref(null);
+
+const formIsValid = computed(() => {
+  return newBranch.value;
+});
+
+const formTeacherIsValid = computed(() => {
+  return newTeacher.value;
+});
+
+const onSubmit = () => {
+  if (newBranch.value) {
+    branchStore.addBranch({
+      label: newBranch.value,
+    });
+    branchs.value.push(newBranch.value);
+
+    //reset
+    newBranch.value = null;
+  }
+};
+
+const onSubmitTeacher = () => {
+  if (newTeacher.value) {
+    teacherStore.addTeacher({
+      name: newTeacher.value,
+    });
+    teachers.value.push(newTeacher.value);
+
+    //reset
+    newTeacher.value = null;
+  }
+};
+
 const BRANCH_LABEL = "Branche";
 const TEACHER_LABEL = "Prof";
 const YEAR_LABEL = "Année";
@@ -32,13 +68,21 @@ const groupBys = [BRANCH_LABEL, TEACHER_LABEL, YEAR_LABEL];
 //   "3258.1 Sécurité informatique",
 //   "3292.2 Outils d'infographie",
 // ];
-const branchs = (await branchStore.getAllBranches()).map(
+/*const branchs = (await branchStore.getAllBranches()).map(
+  (branch) => branch.label
+);*/
+
+let branchs = ref([]);
+branchs.value = (await branchStore.getAllBranches()).map(
   (branch) => branch.label
 );
+
 // const teachers = ["NMA", "MAS", "BLC"];
-const teachers = (await teacherStore.getAllTeachers()).map(
+let teachers = ref([]);
+teachers.value = (await teacherStore.getAllTeachers()).map(
   (teacher) => teacher.name
 );
+
 // const years = ["2022", "2023", "2024"];
 const years = await lessonStore.getAllYears();
 
@@ -189,6 +233,67 @@ const download = (url) => {
       </div>
       <div class="col-3"></div>
       <div class="col-3"></div>
+    </div>
+
+    <div class="q-pa-md">
+      <q-card class="q-mb-md">
+        <q-card-section class="bg-primary text-white">
+          <div class="text-h6">Pas disponible dans la liste ?</div>
+        </q-card-section>
+        <q-tabs
+          v-model="tab"
+          dense
+          class="text-grey"
+          active-color="primary"
+          indicator-color="primary"
+          align="justify"
+          narrow-indicator
+        >
+          <q-tab name="Branches" label="Branches" />
+          <q-tab name="Prof" label="Prof" />
+        </q-tabs>
+        <q-tab-panels v-model="tab" animated>
+          <q-tab-panel name="Branches">
+            <q-form @submit="onSubmit" class="q-gutter-md">
+              <q-input
+                v-model="newBranch"
+                label="Nom de la branche, exemple : 3251.3 - Développement web I"
+                filled
+                lazy-rules
+              />
+
+              <q-card-actions align="right">
+                <q-btn
+                  label="Ajouter la branche"
+                  type="submit"
+                  color="primary"
+                  :disable="!formIsValid"
+                />
+              </q-card-actions>
+            </q-form>
+          </q-tab-panel>
+
+          <q-tab-panel name="Prof">
+            <q-form @submit="onSubmitTeacher" class="q-gutter-md">
+              <q-input
+                v-model="newTeacher"
+                label="Nom du prof, exemple : NMA"
+                filled
+                lazy-rules
+              />
+
+              <q-card-actions align="right">
+                <q-btn
+                  label="Ajouter le prof"
+                  type="submit"
+                  color="primary"
+                  :disable="!formTeacherIsValid"
+                />
+              </q-card-actions>
+            </q-form>
+          </q-tab-panel>
+        </q-tab-panels>
+      </q-card>
     </div>
 
     <div class="q-pa-md">
