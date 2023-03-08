@@ -9,6 +9,7 @@ import CPS from "../views/CPS/CPS.vue";
 import EmailVerification from "../views/EmailVerification/EmailVerification.vue";
 import Login from "../views/Login/Login.vue";
 import PageNotFound from "../views/PageNotFound/PageNotFound.vue";
+import AddLesson from "../views/AddLesson/AddLesson.vue";
 
 // Layouts
 import AppLayout from "../layouts/AppLayout.vue";
@@ -68,6 +69,14 @@ const router = createRouter({
           name: "add-cp",
           component: AddCP,
           meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: "add-lesson",
+          name: "add-lesson",
+          component: AddLesson,
+          meta: { 
             requiresAuth: true,
           },
         },
