@@ -85,12 +85,25 @@ WSGI_APPLICATION = 'arcaled.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
+DATABASES_DEV = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+DATABASES_PROD = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'arc_aled',
+        'USER': 'arc_aled',
+        'PASSWORD': 'vklwNA6LKWLoXIks52F5uVkZB',
+        'HOST': 'postgres-service',
+        'PORT': '5432',
+    }
+}
+
+DATABASES = DATABASES_DEV
 
 
 # Password validation
