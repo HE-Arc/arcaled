@@ -61,6 +61,10 @@ MIDDLEWARE = [
 
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://arc-aled.k8s.ing.he-arc.ch',
+]
+
 ROOT_URLCONF = 'arcaled.urls'
 
 TEMPLATES = [
