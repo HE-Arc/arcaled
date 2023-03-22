@@ -17,6 +17,8 @@ router.register('exams', views.ExamViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('api/login/', views.LoginView.as_view()),
+    path('api/logout/', views.LogoutView.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/admin/', admin.site.urls),
     # API Schema:
