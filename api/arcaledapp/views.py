@@ -51,12 +51,11 @@ class AcceptAccessRequestView(APIView):
         except AccessRequest.DoesNotExist:
             return Response({'message': 'Access request not found'}, status=404)
         email = access_request.email
-        username = email[:email.rfind('@')]
         # Create a new user with the email from the access request
         # and a randomly generated password
         password = User.objects.make_random_password()
         user = User.objects.create_user(
-            username=username,
+            username=email,
             email=email,
             password=password
         )
