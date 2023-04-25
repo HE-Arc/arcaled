@@ -9,6 +9,9 @@ updated by : Rui Marco Loureiro
 
 <script setup>
 import { ref, computed } from "vue";
+import { useStore as useAuthStore } from "../../store/auth.store";
+
+const authStore = useAuthStore();
 
 const email = ref("");
 const password = ref("");
@@ -19,7 +22,10 @@ const formIsValid = computed(() => {
 
 const onSubmit = () => {
   if (email.value && password.value) {
-    alert("Form submitted!");
+    authStore.login({
+      email: email.value,
+      password: password.value,
+    });
   }
 };
 

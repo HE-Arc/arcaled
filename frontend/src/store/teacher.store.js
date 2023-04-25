@@ -1,6 +1,5 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-import { API_LOCATION } from "../constants";
 import { Notify } from "quasar";
 
 const storeName = "teacherStore";
@@ -17,13 +16,12 @@ export const useStore = defineStore(storeName, {
       this.loading = true;
 
       try {
-        const response = await axios.get(`${API_LOCATION}/teachers/`);
+        const response = await axios.get("/teachers/");
 
         const data = response.data;
-        
+
         return data;
       } catch (error) {
-        
         this.error = error;
       } finally {
         this.loading = false;
@@ -33,7 +31,7 @@ export const useStore = defineStore(storeName, {
       this.loading = true;
 
       try {
-        const response = await axios.post(`${API_LOCATION}/teachers/`, teacher);
+        const response = await axios.post("/teachers/", teacher);
 
         const data = response.data;
         Notify.create({

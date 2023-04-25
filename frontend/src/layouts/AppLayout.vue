@@ -24,7 +24,18 @@ import { APP_NAME, FOOTER_TEXT } from "./../constants";
           <div class="col-md-auto">
             <q-toolbar-title> Ratio 5 </q-toolbar-title>
           </div>
-          <div class="col"></div>
+          <div class="col">
+            <div class="row justify-end">
+              <q-btn
+                flat
+                :to="{
+                  name: 'logout',
+                }"
+              >
+                Déconnexion
+              </q-btn>
+            </div>
+          </div>
         </div>
       </q-toolbar>
     </q-header>

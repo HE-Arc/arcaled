@@ -1,4 +1,15 @@
+/*
+ArcAled made by Lucas Perrin, Rui Marco Loureiro and Sebastien Chappuis
+File's version : 1.1.0
+this file is used for : set up the routes with vue router
+
+Wrote by : Lucas Perrin
+updated by : Lucas Perrin
+*/
+
 import { createRouter, createWebHistory } from "vue-router";
+
+import { useStore as useAuthStore } from "../store/auth.store";
 
 // Views
 import AccountValidation from "../views/AccountValidation/AccountValidation.vue";
@@ -76,7 +87,7 @@ const router = createRouter({
           path: "add-lesson",
           name: "add-lesson",
           component: AddLesson,
-          meta: { 
+          meta: {
             requiresAuth: true,
           },
         },
@@ -93,10 +104,11 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  // const isAuthenticated = userStore().user;
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  const authStore = useAuthStore();
+  const { isAuthenticated } = authStore;
 
-  // // redirige / vers /auth
+  // redirige / vers /auth
   // if (to.path === "/") {
   //     if (isAuthenticated) {
   //         next({ name: "items" });
@@ -105,12 +117,12 @@ router.beforeEach((to, from, next) => {
   //     }
   // }
 
-  // if (requiresAuth && !isAuthenticated) {
-  //     next({ name: "auth" });
-  // } else {
-  //     next();
-  // }
+  // Redirige vers /login si l'utilisateur n'est pas authentifié
+  if (requiresAuth && !isAuthenticated) {
+    next({ name: "login" });
+  }
 
+  // Redirige vers la page voulue si l'utilisateur est authentifié
   next();
 });
 

@@ -12,9 +12,9 @@ from .email_validation import is_student
 # Allow anyone to create, only allow admins to read, update and delete
 
 
-
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
+
     def post(self, request):
         # Check if the user is already logged in
         if request.user.is_authenticated:
@@ -33,6 +33,7 @@ class LoginView(APIView):
 
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+
     def post(self, request):
         # Log the user out
         request.user.auth_token.delete()
@@ -41,7 +42,8 @@ class LogoutView(APIView):
 
 class AcceptAccessRequestView(APIView):
     #permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
-    permission_classes = [permissions.AllowAny] # TODO: remove this line
+    permission_classes = [permissions.AllowAny]  # TODO: remove this line
+
     def post(self, request):
         # Get the ID of the access request to accept
         access_request_id = request.data.get('id')
@@ -72,7 +74,6 @@ class AcceptAccessRequestView(APIView):
         })
 
 
-
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -83,6 +84,7 @@ class AccessRequestViewSet(viewsets.ModelViewSet):
     queryset = AccessRequest.objects.all()
     serializer_class = AccessRequestSerializer
     permission_classes = []
+
     def create(self, request, *args, **kwargs):
         # Create the access request
         serializer = self.get_serializer(data=request.data)
@@ -96,7 +98,6 @@ class AccessRequestViewSet(viewsets.ModelViewSet):
             AccessRequest.objects.filter(email=email).delete()
             return Response({'message': 'Invalid email'}, status=400)
         return Response({'message': 'Access request created'})
-
 
 
 class BranchViewSet(viewsets.ModelViewSet):

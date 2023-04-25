@@ -73,13 +73,13 @@ const groupBys = [BRANCH_LABEL, TEACHER_LABEL, YEAR_LABEL];
 );*/
 
 let branchs = ref([]);
-branchs.value = (await branchStore.getAllBranches()).map(
+branchs.value = (await branchStore.getAllBranches())?.map(
   (branch) => branch.label
 );
 
 // const teachers = ["NMA", "MAS", "BLC"];
 let teachers = ref([]);
-teachers.value = (await teacherStore.getAllTeachers()).map(
+teachers.value = (await teacherStore.getAllTeachers())?.map(
   (teacher) => teacher.name
 );
 

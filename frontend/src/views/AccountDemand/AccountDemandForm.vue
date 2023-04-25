@@ -1,22 +1,28 @@
 <script setup>
 import { ref, computed } from "vue";
+import { useStore as useRequestsStore } from "../../store/requests.store";
 
-const model = ref(null);
+const requestsStore = useRequestsStore();
+
+const proof = ref(null);
 const email = ref("");
 const accept = ref(false);
 
 const formIsValid = computed(() => {
-  return email.value && accept.value && model.value;
+  return email.value && accept.value && proof.value;
 });
 
 const onSubmit = () => {
-  if (model.value && email.value && accept.value) {
-    alert("Form submitted!");
+  if (proof.value && email.value && accept.value) {
+    requestsStore.accessRequest({
+      proof: proof.value,
+      email: email.value,
+    });
   }
 };
 
 const onReset = () => {
-  model.value = null;
+  proof.value = null;
   email.value = "";
   accept.value = false;
 };
@@ -32,7 +38,7 @@ const onReset = () => {
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
         <q-file
           outlined
-          v-model="model"
+          v-model="proof"
           label="Photo visage + carte étudiante"
           accept="image/*, .pdf, .png, .jpg, .jpeg"
         >
