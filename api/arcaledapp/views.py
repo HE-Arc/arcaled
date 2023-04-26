@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.decorators import action
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.response import Response
@@ -28,20 +28,26 @@ class LoginView(APIView):
             return Response({'message': 'Invalid credentials'}, status=401)
         # Otherwise, log the user in and return a response with a success message
         login(request, user)
-        return Response({'message': 'Login successful'})
+        return Response({
+            'message': 'Login successful',
+            'user': {
+                'id': user.id,
+                'email': user.email,
+                'is_admin': user.is_staff,
+            }
+        })
 
 
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def post(self, request):
         # Log the user out
-        request.user.auth_token.delete()
+        logout(request)
         return Response({'message': 'Logout successful'})
 
 
 class AcceptAccessRequestView(APIView):
-    #permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
-    permission_classes = [permissions.AllowAny] # TODO: remove this line
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
     def post(self, request):
         # Get the ID of the access request to accept
         access_request_id = request.data.get('id')
