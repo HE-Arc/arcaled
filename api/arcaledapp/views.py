@@ -33,6 +33,7 @@ class LoginView(APIView):
             'user': {
                 'id': user.id,
                 'email': user.email,
+                'is_admin': user.is_staff,
             }
         })
 
