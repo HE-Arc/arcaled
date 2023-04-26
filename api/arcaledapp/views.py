@@ -3,22 +3,24 @@ from rest_framework.decorators import action
 from django.contrib.auth import authenticate, login, logout
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.response import Response
 from arcaledapp.serializers import *
 from .email_validation import is_student
 
-
-# ---- Custom permissions ----
-# Allow anyone to create, only allow admins to read, update and delete
-
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+    def enforce_csrf(self, request):
+        return # No CSRF check
 
 
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
+    authentication_classes = [CsrfExemptSessionAuthentication, BasicAuthentication]
     def post(self, request):
         # Check if the user is already logged in
         if request.user.is_authenticated:
-            return Response({'message': 'Already logged in'})
+            # Logout and login again
+            logout(request)
         # Verify the email and password (using Django's built-in authentication)
         email = request.data.get('email')
         password = request.data.get('password')
