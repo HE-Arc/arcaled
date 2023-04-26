@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from arcaledapp.serializers import *
 from .email_validation import is_student
 
+
 class CsrfExemptSessionAuthentication(SessionAuthentication):
     def enforce_csrf(self, request):
         return # No CSRF check
