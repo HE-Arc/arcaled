@@ -19,18 +19,17 @@ axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.withCredentials = true;
 
-const pinia = createPinia();
-// Persist the state of the stores in the localStorage (or sessionStorage)
-pinia.use(piniaPluginPersistedstate);
-
-const app = createApp(AppLayout); // AppLayout is the default layout
-app.use(Quasar, {
-  plugins: {
-    Notify,
-  }, // Import Quasar plugins and add here
-  lang: quasarLang,
-});
-app.use(pinia);
-app.use(router);
-
-app.mount("#app");
+createApp(AppLayout)
+  .use(Quasar, {
+    plugins: {
+      Notify,
+    }, // Import Quasar plugins and add here
+    lang: quasarLang,
+  })
+  .use(
+    createPinia().use(
+      piniaPluginPersistedstate // persist state in localStorage when the store has the property `persistedState`
+    )
+  )
+  .use(router)
+  .mount("#app");

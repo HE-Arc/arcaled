@@ -170,7 +170,7 @@ const download = (url) => {
 </script>
 
 <template>
-  <q-page padding>
+  <q-page class="q-pa-md" style="max-width: 1000px; margin: 0 auto">
     <div v-if="errorTeacher || errorBranch || errorLesson || errorCps">
       <q-card>
         <q-card-section>
@@ -183,12 +183,19 @@ const download = (url) => {
     </div>
 
     <!-- Filters -->
-    <div class="row items-center justify-evenly">
-      <div class="col-1">
-        <q-icon name="filter_list" size="3rem" />
+    <div class="row justify-center">
+      <div class="col-12 col-md-auto row justify-end">
+        <div class="col-12 col-md-auto">
+          <q-icon name="filter_list" size="3rem" class="q-pa-sm" />
+        </div>
       </div>
-      <div class="col-3">
-        <q-select v-model="branch" :options="branchs" :label="BRANCH_LABEL">
+      <div class="col-12 col-md-3">
+        <q-select
+          v-model="branch"
+          :options="branchs"
+          :label="BRANCH_LABEL"
+          class="q-pa-sm"
+        >
           <template v-slot:append>
             <q-icon
               name="close"
@@ -198,8 +205,13 @@ const download = (url) => {
           </template>
         </q-select>
       </div>
-      <div class="col-3">
-        <q-select v-model="teacher" :options="teachers" :label="TEACHER_LABEL">
+      <div class="col-12 col-md-3">
+        <q-select
+          v-model="teacher"
+          :options="teachers"
+          :label="TEACHER_LABEL"
+          class="q-pa-sm"
+        >
           <template v-slot:append>
             <q-icon
               name="close"
@@ -209,8 +221,13 @@ const download = (url) => {
           </template>
         </q-select>
       </div>
-      <div class="col-3">
-        <q-select v-model="year" :options="years" :label="YEAR_LABEL">
+      <div class="col-12 col-md-3">
+        <q-select
+          v-model="year"
+          :options="years"
+          :label="YEAR_LABEL"
+          class="q-pa-sm"
+        >
           <template v-slot:append>
             <q-icon
               name="close"
@@ -223,22 +240,29 @@ const download = (url) => {
     </div>
 
     <!-- Group By -->
-    <div class="row items-center justify-evenly">
-      <div class="col-1">
-        <q-icon name="view_list" size="3rem" />
+    <div class="row justify-center">
+      <div class="col-12 col-md-auto row justify-end">
+        <div class="col-12 col-md-auto">
+          <q-icon name="view_list" size="3rem" class="q-pa-sm" />
+        </div>
       </div>
-      <div class="col-3">
-        <q-select v-model="groupBy" :options="groupBys" label="Grouper par">
+      <div class="col-12 col-md-3">
+        <q-select
+          v-model="groupBy"
+          :options="groupBys"
+          label="Grouper par"
+          class="q-pa-sm"
+        >
         </q-select>
       </div>
-      <div class="col-3"></div>
-      <div class="col-3"></div>
+      <div class="col-12 col-md-3"></div>
+      <div class="col-12 col-md-3"></div>
     </div>
 
     <div class="q-pa-md">
       <q-card class="q-mb-md">
         <q-card-section class="bg-primary text-white">
-          <div class="text-h6">Pas disponible dans la liste ?</div>
+          <div class="text-h6">Branche ou prof inexistant ?</div>
         </q-card-section>
         <q-tabs
           v-model="tab"

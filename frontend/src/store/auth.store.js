@@ -15,18 +15,25 @@ export const useStore = defineStore(storeName, {
   persist: true, // ⚠️ persists state in localStorage
   getters: {},
   actions: {
-    async login({ username, password }) {
+    async login({ email, password }) {
       this.loading = true;
 
       try {
         const response = await axios.post("/login/", {
-          username,
+          email,
           password,
         });
 
         const data = response.data;
+        console.log(data);
 
         this.isAuthenticated = true;
+        this.user = {
+          // Select only the needed fields
+          id: data.user.id,
+          email: data.user.email,
+          is_admin: data.user.is_admin,
+        };
 
         Notify.create({
           message: "Connexion réussie",
@@ -48,14 +55,22 @@ export const useStore = defineStore(storeName, {
       }
     },
     async logout() {
+      if (!this.isAuthenticated) {
+        Notify.create({
+          message: "Vous n'êtes pas connecté",
+          color: "info",
+          position: "top",
+          timeout: 2000,
+        });
+        return;
+      }
+
       this.loading = true;
 
       try {
         const response = await axios.post("/logout/");
 
         const data = response.data;
-
-        this.isAuthenticated = false;
 
         Notify.create({
           message: "Déconnexion réussie",
@@ -73,6 +88,9 @@ export const useStore = defineStore(storeName, {
         });
         console.log(error);
       } finally {
+        this.isAuthenticated = false;
+        this.user = null;
+
         this.loading = false;
       }
     },

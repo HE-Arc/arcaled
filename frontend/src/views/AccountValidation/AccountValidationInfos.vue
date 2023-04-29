@@ -1,16 +1,19 @@
 <script setup>
 import { ref } from "vue";
 
-let demand = {
-  id: 1,
-  number: "123456789",
-  email: "test@he-arc.ch",
-};
+import { useStore as useRequestsStore } from "../../store/requests.store";
+import { storeToRefs } from "pinia";
+import router from "../../router";
 
-let confirm = ref(false);
+const requestsStore = useRequestsStore();
 
-const onClose = (n) => {
-  console.log("n", n);
+const { currentRequest } = storeToRefs(requestsStore);
+
+const validateAccount = async () => {
+  await requestsStore.validateAccount(currentRequest.value.id);
+  router.push({
+    name: "accounts-waiting",
+  });
 };
 </script>
 
@@ -24,10 +27,13 @@ const onClose = (n) => {
       <q-list>
         <q-item>
           <q-item-section avatar>
-            <q-icon name="pin" />
+            <q-icon name="person" />
           </q-item-section>
           <q-item-section
-            >Numéro de la demande : {{ demand.number }}</q-item-section
+            >Etudiant :
+            {{
+              currentRequest.firstName + " " + currentRequest.lastName
+            }}</q-item-section
           >
         </q-item>
 
@@ -35,7 +41,14 @@ const onClose = (n) => {
           <q-item-section avatar>
             <q-icon name="mail" />
           </q-item-section>
-          <q-item-section> Adresse e-mail : {{ demand.email }} </q-item-section>
+          <q-item-section>
+            <q-item-label>
+              <a :href="'mailto:' + currentRequest.email">
+                {{ currentRequest.email }}
+              </a>
+              <q-icon name="verified" color="green"></q-icon>
+            </q-item-label>
+          </q-item-section>
         </q-item>
       </q-list>
     </q-card-section>
@@ -49,32 +62,13 @@ const onClose = (n) => {
     <q-card-section>
       <!-- center the image -->
       <div class="row justify-center">
-        <q-img
-          src="https://cdn.quasar.dev/img/parallax2.jpg"
-          style="width: 50%; height: 100%"
-        />
+        <q-img :src="currentRequest.proof" style="width: 50%; height: 100%" />
       </div>
     </q-card-section>
 
     <q-card-actions align="right">
-      <q-btn color="red" icon="close">
-        <q-menu>
-          <q-list>
-            <q-item
-              v-for="n in 5"
-              :key="n"
-              v-close-popup="n > 0"
-              :clickable="n > 0"
-              :disable="!confirm"
-              @click="onClose(n)"
-            >
-              <q-item-section>Reason {{ n }}</q-item-section>
-            </q-item>
-          </q-list>
-          <q-toggle v-model="confirm" label="Enable this to make your choice" />
-        </q-menu>
-      </q-btn>
-      <q-btn color="green" icon="check" />
+      <q-btn color="red" icon="close" disable />
+      <q-btn color="green" icon="check" @click="validateAccount" />
     </q-card-actions>
   </q-card>
 </template>

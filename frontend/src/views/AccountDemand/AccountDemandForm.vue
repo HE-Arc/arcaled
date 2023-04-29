@@ -53,7 +53,13 @@ const onReset = () => {
           v-model="email"
           type="text"
           prefix="Email:"
-          suffix="@he-arc.ch"
+          lazy-rules
+          :rules="[
+            (val) => !!val || 'Veuillez entrer votre email',
+            // l'email doit se finir avec @he-arc.ch
+            (val) =>
+              val.endsWith('@he-arc.ch') || 'Veuillez entrer un email HE-Arc',
+          ]"
         >
           <template v-slot:prepend>
             <q-icon name="mail" />

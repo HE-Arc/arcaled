@@ -10,6 +10,7 @@ updated by : Rui Marco Loureiro
 <script setup>
 import { ref, computed } from "vue";
 import { useStore as useAuthStore } from "../../store/auth.store";
+import router from "../../router";
 
 const authStore = useAuthStore();
 
@@ -20,12 +21,16 @@ const formIsValid = computed(() => {
   return email.value && password.value;
 });
 
-const onSubmit = () => {
+const onSubmit = async () => {
   if (email.value && password.value) {
-    authStore.login({
+    await authStore.login({
       email: email.value,
       password: password.value,
     });
+
+    if (authStore.isAuthenticated) {
+      router.push({ name: "app" });
+    }
   }
 };
 
@@ -49,7 +54,13 @@ const onReset = () => {
             v-model="email"
             type="text"
             prefix="Email:"
-            suffix="@he-arc.ch"
+            lazy-rules
+            :rules="[
+              (val) => !!val || 'Veuillez entrer votre email',
+              // l'email doit se finir avec @he-arc.ch
+              (val) =>
+                val.endsWith('@he-arc.ch') || 'Veuillez entrer un email HE-Arc',
+            ]"
           >
             <template v-slot:prepend>
               <q-icon name="mail" />

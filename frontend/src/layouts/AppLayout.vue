@@ -1,6 +1,12 @@
 <script setup>
 import { RouterView } from "vue-router";
+import { storeToRefs } from "pinia";
+
 import { APP_NAME, FOOTER_TEXT } from "./../constants";
+import { useStore as useAuthStore } from "../store/auth.store";
+
+const authStore = useAuthStore();
+const { isAuthenticated, user } = storeToRefs(authStore);
 </script>
 
 <template>
@@ -22,17 +28,35 @@ import { APP_NAME, FOOTER_TEXT } from "./../constants";
           </div>
 
           <div class="col-md-auto">
-            <q-toolbar-title> Ratio 5 </q-toolbar-title>
+            <q-toolbar-title>
+              <div v-if="isAuthenticated">Ratio 5</div>
+            </q-toolbar-title>
           </div>
-          <div class="col">
-            <div class="row justify-end">
+          <div class="col row">
+            <q-space />
+            <div v-if="isAuthenticated">
+              <template v-if="user.is_admin">
+                <q-btn
+                  dense
+                  round
+                  flat
+                  icon="hourglass_top"
+                  class="q-ml-md"
+                  :to="{
+                    name: 'accounts-waiting',
+                  }"
+                >
+                  <q-badge color="red" floating>4</q-badge>
+                </q-btn>
+              </template>
               <q-btn
                 flat
+                @click="authStore.logout"
                 :to="{
-                  name: 'logout',
+                  name: 'login',
                 }"
+                icon="logout"
               >
-                Déconnexion
               </q-btn>
             </div>
           </div>
