@@ -1,6 +1,5 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-import { API_LOCATION } from "../constants";
 import { Notify } from "quasar";
 
 const storeName = "brancheStore";
@@ -17,7 +16,7 @@ export const useStore = defineStore(storeName, {
       this.loading = true;
 
       try {
-        const response = await axios.get(`${API_LOCATION}/branches/`);
+        const response = await axios.get("/branches/");
 
         const data = response.data;
 
@@ -32,7 +31,7 @@ export const useStore = defineStore(storeName, {
       this.loading = true;
 
       try {
-        const response = await axios.post(`${API_LOCATION}/branches/`, branch);
+        const response = await axios.post("/branches/", branch);
 
         const data = response.data;
         Notify.create({

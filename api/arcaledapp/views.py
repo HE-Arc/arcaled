@@ -43,6 +43,7 @@ class LoginView(APIView):
 
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+
     def post(self, request):
         # Log the user out
         logout(request)
@@ -81,7 +82,6 @@ class AcceptAccessRequestView(APIView):
         })
 
 
-
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -92,6 +92,7 @@ class AccessRequestViewSet(viewsets.ModelViewSet):
     queryset = AccessRequest.objects.all()
     serializer_class = AccessRequestSerializer
     permission_classes = []
+
     def create(self, request, *args, **kwargs):
         # Create the access request
         serializer = self.get_serializer(data=request.data)
@@ -105,7 +106,6 @@ class AccessRequestViewSet(viewsets.ModelViewSet):
             AccessRequest.objects.filter(email=email).delete()
             return Response({'message': 'Invalid email'}, status=400)
         return Response({'message': 'Access request created'})
-
 
 
 class BranchViewSet(viewsets.ModelViewSet):

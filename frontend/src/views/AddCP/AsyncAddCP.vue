@@ -44,7 +44,7 @@ const onReset = () => {
 </script>
 
 <template>
-  <q-page padding>
+  <q-page class="q-pa-md" style="max-width: 1000px; margin: 0 auto">
     <div v-if="errorLesson || errorCps">
       <q-card>
         <q-card-section>
