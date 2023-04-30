@@ -27,13 +27,14 @@ export const useStore = defineStore(storeName, {
         const data = response.data;
         console.log(data);
 
-        this.isAuthenticated = true;
         this.user = {
           // Select only the needed fields
           id: data.user.id,
           email: data.user.email,
           is_admin: data.user.is_admin,
         };
+        // ⚠️ should be after setting the user
+        this.isAuthenticated = true;
 
         Notify.create({
           message: "Connexion réussie",
