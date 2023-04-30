@@ -30,8 +30,8 @@ SECRET_KEY = 'django-insecure-ue1x8ds$+82pm=3*h0^^t9v50lyv%q$8-h)1t$4(9j38^gdk19
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# Added following this tutorial https://dzone.com/articles/how-to-fix-django-cors-error
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['arc-aled.k8s.ing.he-arc.ch',
+                 '127.0.0.1', 'localhost']
 
 MEDIA_URL = '/api/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
