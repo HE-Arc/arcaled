@@ -28,8 +28,9 @@ import { APP_NAME } from "../../constants";
             <q-icon name="warning" color="warning" />
           </q-item-section>
           <q-item-section>
-            Veuillez respecter ces règles, toutes demandes non conformes
-            entraineront un bannissement définitif sur ArcAled</q-item-section
+            Veuillez respecter ces règles, toutes demandes abusives non
+            conformes entraineront un bannissement définitif sur
+            ArcAled</q-item-section
           >
         </q-item>
       </q-list>

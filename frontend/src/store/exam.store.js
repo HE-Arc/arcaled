@@ -1,6 +1,5 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-import { API_LOCATION } from "../constants";
 import { Notify } from "quasar";
 
 const storeName = "examStore";
@@ -17,7 +16,7 @@ export const useStore = defineStore(storeName, {
       this.loading = true;
 
       try {
-        const response = await axios.get(`${API_LOCATION}/exams/`);
+        const response = await axios.get("/exams/");
         // All exams (with lesson URL)
         let exams = response.data;
         let promises = exams.map(
@@ -75,10 +74,10 @@ export const useStore = defineStore(storeName, {
       try {
         const formdata = new FormData();
 
-        formdata.append("lesson", `${API_LOCATION}/lessons/${lesson.id}/`);
+        formdata.append("lesson", `/lessons/${lesson.id}/`);
         formdata.append("content", content);
 
-        const response = await axios.post(`${API_LOCATION}/exams/`, formdata);
+        const response = await axios.post("/exams/", formdata);
 
         Notify.create({
           message: "CP ajouté avec succès",

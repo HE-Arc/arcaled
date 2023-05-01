@@ -1,8 +1,6 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-import { API_LOCATION } from "../constants";
 import { Notify } from "quasar";
-
 
 const storeName = "lessonStore";
 const defautSate = {
@@ -18,7 +16,7 @@ export const useStore = defineStore(storeName, {
       this.loading = true;
 
       try {
-        const response = await axios.get(`${API_LOCATION}/lessons/`);
+        const response = await axios.get("/lessons/");
 
         const lessons = await Promise.all(
           response.data.map(async (lesson) => {
@@ -47,7 +45,7 @@ export const useStore = defineStore(storeName, {
       this.loading = true;
 
       try {
-        const response = await axios.get(`${API_LOCATION}/lessons/`);
+        const response = await axios.get("/lessons/");
 
         const data = response.data;
 
@@ -61,22 +59,19 @@ export const useStore = defineStore(storeName, {
         this.loading = false;
       }
     },
-    async addLesson({ branch, teacher, year}) {
+    async addLesson({ branch, teacher, year }) {
       this.loading = true;
 
       try {
         const formdata = new FormData();
 
         //change year format to YYYY-MM-DD
-        
 
+        formdata.append("branch", `/branches/${branch.id}/`);
+        formdata.append("teacher", `/teachers/${teacher.id}/`);
+        formdata.append("year", year.year);
 
-        formdata.append("branch", `${API_LOCATION}/branches/${branch.id}/`);
-        formdata.append("teacher", `${API_LOCATION}/teachers/${teacher.id}/`);
-        formdata.append("year",  year.year);
-
-
-        const response = await axios.post(`${API_LOCATION}/lessons/`, formdata);
+        const response = await axios.post("/lessons/", formdata);
 
         //const data = response.data;
         Notify.create({
