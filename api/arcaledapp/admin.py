@@ -29,8 +29,15 @@ class ExamAdmin(admin.ModelAdmin):
     search_fields = ('lesson', 'content')
     ordering = ('lesson', 'content')
 
+class MemberRatioAdmin(admin.ModelAdmin):
+    list_display = ('user', 'ratio')
+    list_filter = ('user', 'ratio')
+    search_fields = ('user', 'ratio')
+    ordering = ('user', 'ratio')
+
 admin.site.register(AccessRequest, AccessRequestAdmin)
 admin.site.register(Branch, BranchAdmin)
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Lesson, LessonAdmin)
 admin.site.register(Exam, ExamAdmin)
+admin.site.register(MemberRatio, MemberRatioAdmin)

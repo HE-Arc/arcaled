@@ -30,3 +30,9 @@ class Exam(models.Model):
     content = models.FileField(upload_to='exam_contents/')
     def __str__(self):
         return 'Exam of ' + str(self.lesson)
+
+class MemberRatio(models.Model):
+    ratio = models.IntegerField()
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='member_ratio')
+    def __str__(self):
+        return self.user.username + ' - ' + str(self.ratio)
