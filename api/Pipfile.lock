@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "5eee9782cbaa5d8fc54b1ac0b6d9befb857d35b4e1ee7a40925cc2de6a7a71aa"
+            "sha256": "85a15309d9be54b24c3ffd74768432749c90a3ed4b126bedf86bb9e549bec2d1"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -137,6 +137,14 @@
             "index": "pypi",
             "version": "==4.1.7"
         },
+        "django-anymail": {
+            "hashes": [
+                "sha256:339d0ada34fde4e7e8b655dd496f780a5db0e2782b1b10794f534e22c4829dc7",
+                "sha256:5f18eb6b368e11ed1ec1e3e02f5b80e6d6406b4a37493ac1c1d18b83ca4f3c57"
+            ],
+            "index": "pypi",
+            "version": "==9.1"
+        },
         "django-cors-headers": {
             "hashes": [
                 "sha256:5fbd58a6fb4119d975754b2bc090f35ec160a8373f276612c675b00e8a138739",
@@ -176,6 +184,14 @@
             ],
             "index": "pypi",
             "version": "==0.5.1"
+        },
+        "install": {
+            "hashes": [
+                "sha256:0d3fadf4aa62c95efe8d34757c8507eb46177f86c016c21c6551eafc6a53d5a9",
+                "sha256:e67c8a0be5ccf8cb4ffa17d090f3a61b6e820e6a7e21cd1d2c0f7bc59b18e647"
+            ],
+            "index": "pypi",
+            "version": "==1.3.5"
         },
         "jsonschema": {
             "hashes": [
@@ -301,6 +317,14 @@
             "index": "pypi",
             "version": "==0.19.3"
         },
+        "python-dateutil": {
+            "hashes": [
+                "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86",
+                "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"
+            ],
+            "index": "pypi",
+            "version": "==2.8.2"
+        },
         "python-dotenv": {
             "hashes": [
                 "sha256:32b2bdc1873fd3a3c346da1c6db83d0053c3c62f28f1f38516070c4c8971b1d3",
@@ -370,6 +394,21 @@
             ],
             "index": "pypi",
             "version": "==2.28.2"
+        },
+        "sib-api-v3-sdk": {
+            "hashes": [
+                "sha256:8975108c4a66ca2280532017190150f98ac826eacdda6c2f859ff104d2828266"
+            ],
+            "index": "pypi",
+            "version": "==7.6.0"
+        },
+        "six": {
+            "hashes": [
+                "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
+                "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
+            ],
+            "index": "pypi",
+            "version": "==1.16.0"
         },
         "soupsieve": {
             "hashes": [

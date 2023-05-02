@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+from corsheaders.defaults import default_headers
 
 load_dotenv()
 
@@ -47,11 +48,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',  # Added for CORS
     'drf_spectacular',  # Added for SWAGGER
+    "anymail",  # Added for email
     'django.contrib.staticfiles',
     'arcaledapp',
 ]
 
 MIDDLEWARE = [
+    # doit être avant CommonMiddleware
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -59,24 +63,32 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 
 ]
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
     'https://arc-aled.k8s.ing.he-arc.ch'
 ]
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:8000',
-    'http://127.0.0.1:8000',
     'http://localhost:5173',
     'http://127.0.0.1:5173',
     'https://arc-aled.k8s.ing.he-arc.ch',
 ]
+
+# # Ces paramètres sont utiles en production, les cookies ne sont envoyés que pour des connexions HTTPS :
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+# # Ces options empêchent l'envoi de cookies dans les requêtes inter-sites. Les cookies sont sensibles au domaine, mais les cookies CSRF sont sensibles à l'origine (domaine + port).
+# CSRF_COOKIE_SAME_SITE = 'None'
+# SESSION_COOKIE_SAMESITE = 'None'
+# # Indique si le code JavaScript côté client peut accéder au cookie de session.
+# CSRF_COOKIE_HTTPONLY = False
+# SESSION_COOKIE_HTTPONLY = False
+
 
 ROOT_URLCONF = 'arcaled.urls'
 
@@ -189,11 +201,4 @@ SPECTACULAR_SETTINGS = {
 # -------------- END SWAGGER --------------
 
 # -------------- EMAIL --------------
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
-EMAIL_PORT = os.getenv('EMAIL_PORT', 587)
-EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'False') == 'True'
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-# -------------- END EMAIL --------------
+SENDINBLUE_API_KEY = os.environ.get('SENDINBLUE_API_KEY')

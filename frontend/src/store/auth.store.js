@@ -25,7 +25,6 @@ export const useStore = defineStore(storeName, {
         });
 
         const data = response.data;
-        console.log(data);
 
         this.user = {
           // Select only the needed fields
@@ -50,7 +49,6 @@ export const useStore = defineStore(storeName, {
           position: "top",
           timeout: 2000,
         });
-        console.log(error);
       } finally {
         this.loading = false;
       }

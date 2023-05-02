@@ -43,7 +43,7 @@ const request = async (waitingRequest) => {
 </script>
 
 <template>
-  <div v-if="waitingRequests.length === 0">
+  <div v-if="!waitingRequests || waitingRequests.length === 0">
     <q-page class="q-pa-md" style="max-width: 1000px; margin: 0 auto">
       <div class="text-h6">Aucun compte en attente de validation</div>
     </q-page>

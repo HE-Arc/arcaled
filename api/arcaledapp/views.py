@@ -1,3 +1,4 @@
+from __future__ import print_function
 from django.http import FileResponse
 from rest_framework.views import APIView
 from rest_framework.decorators import action
@@ -9,6 +10,11 @@ from rest_framework.response import Response
 from arcaledapp.serializers import *
 from .email_validation import is_student
 from .models import MemberRatio
+from django.conf import settings
+import time
+import sib_api_v3_sdk
+from sib_api_v3_sdk.rest import ApiException
+from pprint import pprint
 
 
 # Custom permissions
@@ -61,12 +67,14 @@ class CreateReadPermission(permissions.BasePermission):
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
     def enforce_csrf(self, request):
-        return # No CSRF check
+        return  # No CSRF check
 
 
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
-    authentication_classes = [CsrfExemptSessionAuthentication, BasicAuthentication]
+    authentication_classes = [
+        CsrfExemptSessionAuthentication, BasicAuthentication]
+
     def post(self, request):
         # Check if the user is already logged in
         if request.user.is_authenticated:
@@ -93,7 +101,9 @@ class LoginView(APIView):
 
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    authentication_classes = [CsrfExemptSessionAuthentication, BasicAuthentication]
+    authentication_classes = [
+        CsrfExemptSessionAuthentication, BasicAuthentication]
+
     def post(self, request):
         # Log the user out
         logout(request)
@@ -102,6 +112,7 @@ class LogoutView(APIView):
 
 class AcceptAccessRequestView(APIView):
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
     def post(self, request):
         # Get the ID of the access request to accept
         access_request_id = request.data.get('id')
@@ -126,19 +137,37 @@ class AcceptAccessRequestView(APIView):
         )
         # Delete the access request (we don't need it anymore)
         access_request.delete()
-        # TODO: send an email to the user with the password
-        # ...
-        # ...
-        # ...
+
+        # Send an email to the user with the password
+
+        configuration = sib_api_v3_sdk.Configuration()
+        configuration.api_key['api-key'] = settings.SENDINBLUE_API_KEY
+
+        api_instance = sib_api_v3_sdk.TransactionalEmailsApi(
+            sib_api_v3_sdk.ApiClient(configuration))
+        subject = "Confirmation de demande d'accès"
+        html_content = "<html><body><h1>Votre demande d'accès à ARCALED a été acceptée 🔥👍</h1><br> Vous pouvez vous connecter à l'adresse suivante :  <a href=\"https://arc-aled.k8s.ing.he-arc.ch/login\" target=\"_blank\">https://arc-aled.k8s.ing.he-arc.ch/login</a> <br> Votre mail est : <strong>{email}</strong>  <br> Votre mot de passe est : <strong>{password}</strong> <br><br>LA TEAM ARCALED 😘 </body></html>".format(
+            email=email, password=password)
+        sender = {"name": "Arcaled", "email": email}
+        to = [{"email": email}]
+        send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
+            to=to, html_content=html_content, sender=sender, subject=subject)
+
+        try:
+            api_response = api_instance.send_transac_email(send_smtp_email)
+            pprint(api_response)
+        except ApiException as e:
+            print("Exception when calling SMTPApi->send_transac_email: %s\n" % e)
+
         # Return a response with the email and password of the new user
         return Response({
-            'email': user.email,
-            'password': password
+            'message': 'Access request accepted',
         })
 
 
 class RejectAccessRequestView(APIView):
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
     def post(self, request):
         # Get the ID of the access request to reject
         access_request_id = request.data.get('id')
@@ -162,6 +191,7 @@ class AccessRequestViewSet(viewsets.ModelViewSet):
     queryset = AccessRequest.objects.all()
     serializer_class = AccessRequestSerializer
     permission_classes = [AnyoneCreatePermission]
+
     def create(self, request, *args, **kwargs):
         # Get the serializer
         serializer = self.get_serializer(data=request.data)
@@ -204,6 +234,7 @@ class ExamViewSet(viewsets.ModelViewSet):
     queryset = Exam.objects.all()
     serializer_class = ExamSerializer
     permission_classes = [CreateReadPermission]
+
     def create(self, request, *args, **kwargs):
         # Get the serializer
         serializer = self.get_serializer(data=request.data)
@@ -220,6 +251,7 @@ class ExamViewSet(viewsets.ModelViewSet):
 
 class ExamContentView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+
     def get(self, request, filename):
         # Get the user's ratio
         user = request.user

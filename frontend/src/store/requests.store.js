@@ -91,6 +91,36 @@ export const useStore = defineStore(storeName, {
         this.loading = false;
       }
     },
+    async rejectValidation(access_request_id) {
+      this.loading = true;
+      try {
+        const response = await axios.post(`/reject-access-request/`, {
+          id: access_request_id,
+        });
+
+        const data = response.data;
+
+        Notify.create({
+          message: "Compte rejeté avec succès",
+          color: "positive",
+          position: "top",
+          timeout: 2000,
+        });
+
+        return data;
+      } catch (error) {
+        this.error = error;
+        Notify.create({
+          message: "Erreur lors du rejet du compte",
+          color: "negative",
+          position: "top",
+          timeout: 2000,
+        });
+        console.log(error);
+      } finally {
+        this.loading = false;
+      }
+    },
     setCurrentRequest(request) {
       this.currentRequest = request;
     },

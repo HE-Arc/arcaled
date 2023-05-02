@@ -103,7 +103,7 @@ const years = await lessonStore.getAllYears();
 //     branch: "3292.2 Outils d'infographie",
 //   },
 // ];
-const cps = (await cpsStore.getAllCps()).map((cp) => ({
+const cps = (await cpsStore.getAllCps())?.map((cp) => ({
   teacher: cp.teacher.name,
   year: cp.year,
   branch: cp.branch.label,
@@ -111,7 +111,7 @@ const cps = (await cpsStore.getAllCps()).map((cp) => ({
 }));
 
 const filteredCps = computed(() => {
-  return cps.filter((cp) => {
+  return cps?.filter((cp) => {
     return (
       (branch.value === null || cp.branch === branch.value) &&
       (teacher.value === null || cp.teacher === teacher.value) &&
@@ -122,7 +122,7 @@ const filteredCps = computed(() => {
 
 const groupedCps = computed(() => {
   if (groupBy.value === BRANCH_LABEL) {
-    return filteredCps.value.reduce((acc, cp) => {
+    return filteredCps.value?.reduce((acc, cp) => {
       if (!acc[cp.branch]) {
         acc[cp.branch] = [];
       }
@@ -130,7 +130,7 @@ const groupedCps = computed(() => {
       return acc;
     }, {});
   } else if (groupBy.value === TEACHER_LABEL) {
-    return filteredCps.value.reduce((acc, cp) => {
+    return filteredCps.value?.reduce((acc, cp) => {
       if (!acc[cp.teacher]) {
         acc[cp.teacher] = [];
       }
@@ -138,7 +138,7 @@ const groupedCps = computed(() => {
       return acc;
     }, {});
   } else if (groupBy.value === YEAR_LABEL) {
-    return filteredCps.value.reduce((acc, cp) => {
+    return filteredCps.value?.reduce((acc, cp) => {
       if (!acc[cp.year]) {
         acc[cp.year] = [];
       }
@@ -336,7 +336,7 @@ const download = (url) => {
       </q-toolbar>
 
       <q-list bordered padding>
-        <q-item v-if="filteredCps.length === 0">
+        <q-item v-if="!filteredCps || filteredCps.length === 0">
           <q-item-section>
             <q-item-label
               >Aucun CP ne correspond à votre recherche</q-item-label

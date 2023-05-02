@@ -15,6 +15,13 @@ const validateAccount = async () => {
     name: "accounts-waiting",
   });
 };
+
+const rejectAccount = async () => {
+  await requestsStore.rejectValidation(currentRequest.value.id);
+  router.push({
+    name: "accounts-waiting",
+  });
+};
 </script>
 
 <template>
@@ -67,7 +74,7 @@ const validateAccount = async () => {
     </q-card-section>
 
     <q-card-actions align="right">
-      <q-btn color="red" icon="close" disable />
+      <q-btn color="red" icon="close" @click="rejectAccount" />
       <q-btn color="green" icon="check" @click="validateAccount" />
     </q-card-actions>
   </q-card>
