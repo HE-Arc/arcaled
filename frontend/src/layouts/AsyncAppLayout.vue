@@ -38,7 +38,12 @@ await userStore.fetchRatio();
 
           <div class="col-md-auto">
             <q-toolbar-title>
-              <div v-if="authStore.isAuthenticated">Ratio {{ ratio }}</div>
+              <div v-if="authStore.isAuthenticated">
+                <!-- Color green if ration > 0 else red -->
+                <div :class="ratio > 0 ? 'text-green' : 'text-red'">
+                  <strong>Ratio {{ ratio }}</strong>
+                </div>
+              </div>
             </q-toolbar-title>
           </div>
           <div class="col row">

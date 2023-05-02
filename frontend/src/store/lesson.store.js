@@ -47,8 +47,6 @@ export const useStore = defineStore(storeName, {
       try {
         const formdata = new FormData();
 
-        console.log(new Date(year).toISOString().split("T")[0]);
-
         formdata.append(
           "branch",
           `${import.meta.env.VITE_API_LOCATION}/branches/${branch.id}/`

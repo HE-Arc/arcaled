@@ -133,7 +133,7 @@ class AcceptAccessRequestView(APIView):
         # Create a new MemberRatio object for the new user
         MemberRatio.objects.create(
             user=user,
-            ratio=30,
+            ratio=5,
         )
         # Delete the access request (we don't need it anymore)
         access_request.delete()
@@ -246,7 +246,7 @@ class ExamViewSet(viewsets.ModelViewSet):
         # Increment the ratio of the user who created the exam by 20
         user = request.user
         member_ratio = MemberRatio.objects.get(user=user)
-        member_ratio.ratio += 20
+        member_ratio.ratio += 2
         member_ratio.save()
         return Response({'message': 'Exam created'})
 

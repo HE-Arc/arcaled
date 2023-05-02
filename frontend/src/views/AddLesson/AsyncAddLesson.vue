@@ -70,7 +70,7 @@ const onReset = () => {
           :options="branches"
           option-value="id"
           option-label="label"
-          class="q-pa-sm"
+          class="q-px-sm"
         />
 
         <q-select
@@ -80,7 +80,7 @@ const onReset = () => {
           :options="teachers"
           option-value="id"
           option-label="name"
-          class="q-pa-sm"
+          class="q-px-sm"
         />
         <q-select
           v-model="year"
@@ -89,7 +89,7 @@ const onReset = () => {
           :options="years"
           option-value="id"
           option-label="year"
-          class="q-pa-sm"
+          class="q-px-sm"
         />
 
         <q-card-actions align="right">
