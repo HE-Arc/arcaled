@@ -22,6 +22,7 @@ urlpatterns = [
     path('api/logout/', views.LogoutView.as_view()),
     path('api/accept-access-request/', views.AcceptAccessRequestView.as_view()),
     path('api/reject-access-request/', views.RejectAccessRequestView.as_view()),
+    path('api/ratio/', views.RatioView.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/admin/', admin.site.urls),
     path('api/media/exam_contents/<path:filename>',

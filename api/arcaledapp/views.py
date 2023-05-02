@@ -265,3 +265,16 @@ class ExamContentView(APIView):
         member_ratio.save()
         # Return the requested file
         return FileResponse(open('media/exam_contents/' + filename, 'rb'))
+
+
+class RatioView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        # Get the user's ratio
+        user = request.user
+        member_ratio = MemberRatio.objects.get(user=user)
+        # Return the user's ratio
+        return Response({
+            'ratio': member_ratio.ratio,
+        })
