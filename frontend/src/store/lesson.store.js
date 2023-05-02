@@ -41,24 +41,6 @@ export const useStore = defineStore(storeName, {
         this.loading = false;
       }
     },
-    async getAllYears() {
-      this.loading = true;
-
-      try {
-        const response = await axios.get("/lessons/");
-
-        const data = response.data;
-
-        let years = data.map((lesson) => new Date(lesson.year).getFullYear());
-        years = [...new Set(years)];
-
-        return years;
-      } catch (error) {
-        this.error = error;
-      } finally {
-        this.loading = false;
-      }
-    },
     async addLesson({ branch, teacher, year }) {
       this.loading = true;
 

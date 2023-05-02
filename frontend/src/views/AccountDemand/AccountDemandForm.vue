@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useStore as useRequestsStore } from "../../store/requests.store";
+import { Notify } from "quasar";
 
 const requestsStore = useRequestsStore();
 
@@ -26,6 +27,15 @@ const onReset = () => {
   email.value = "";
   accept.value = false;
 };
+
+const onRejected = () => {
+  Notify.create({
+    message: "Fichier trop volumineux ou format non supporté",
+    color: "negative",
+    position: "top",
+    timeout: 2000,
+  });
+};
 </script>
 
 <template>
@@ -40,7 +50,9 @@ const onReset = () => {
           outlined
           v-model="proof"
           label="Photo visage + carte étudiante"
-          accept="image/*, .pdf, .png, .jpg, .jpeg"
+          accept=".png, .jpg, .jpeg"
+          max-file-size="1024"
+          @rejected="onRejected"
         >
           <template v-slot:append>
             <!-- photo -->

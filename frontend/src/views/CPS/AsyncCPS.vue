@@ -83,8 +83,11 @@ teachers.value = (await teacherStore.getAllTeachers())?.map(
   (teacher) => teacher.name
 );
 
-// const years = ["2022", "2023", "2024"];
-const years = await lessonStore.getAllYears();
+const years_2010_now = [];
+for (let i = 2010; i <= new Date().getFullYear(); i++) {
+  years_2010_now.push(i.toString());
+}
+const years = years_2010_now;
 
 // const cps = [
 //   {

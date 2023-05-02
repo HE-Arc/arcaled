@@ -71,7 +71,9 @@ const request = async (waitingRequest) => {
             @click="request(waitingRequest)"
           >
             <q-item-section avatar>
-              <q-avatar> <img :src="waitingRequest.proof" /> </q-avatar>
+              <q-avatar icon="person" size="xl">
+                <!-- <q-badge floating color="teal">new</q-badge> -->
+              </q-avatar>
             </q-item-section>
 
             <q-item-section>

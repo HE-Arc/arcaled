@@ -140,6 +140,8 @@ class AcceptAccessRequestView(APIView):
 
         # Send an email to the user with the password
 
+        # https://github.com/sendinblue/APIv3-python-library
+
         configuration = sib_api_v3_sdk.Configuration()
         configuration.api_key['api-key'] = settings.SENDINBLUE_API_KEY
 

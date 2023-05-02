@@ -12,6 +12,7 @@ import { ref, computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore as useLessonStore } from "../../store/lesson.store";
 import { useStore as useExamStore } from "../../store/exam.store";
+import { Notify } from "quasar";
 
 const lessonStore = useLessonStore();
 const cpsStore = useExamStore();
@@ -40,6 +41,15 @@ const onSubmit = () => {
 const onReset = () => {
   lesson.value = null;
   content.value = null;
+};
+
+const onRejected = () => {
+  Notify.create({
+    message: "Fichier trop volumineux ou format non supporté, taille max 1MB",
+    color: "negative",
+    position: "top",
+    timeout: 2000,
+  });
 };
 </script>
 
@@ -125,6 +135,8 @@ const onReset = () => {
             v-model="content"
             label="CP"
             accept="image/*, .pdf, .png, .jpg, .jpeg"
+            max-file-size="1024"
+            @rejected="onRejected"
           >
             <template v-slot:append>
               <!-- photo -->
