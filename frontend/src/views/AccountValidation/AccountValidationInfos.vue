@@ -39,7 +39,7 @@ const rejectAccount = async () => {
           <q-item-section
             >Etudiant :
             {{
-              currentRequest.firstName + " " + currentRequest.lastName
+              currentRequest?.firstName + " " + currentRequest?.lastName
             }}</q-item-section
           >
         </q-item>
@@ -50,8 +50,8 @@ const rejectAccount = async () => {
           </q-item-section>
           <q-item-section>
             <q-item-label>
-              <a :href="'mailto:' + currentRequest.email">
-                {{ currentRequest.email }}
+              <a :href="'mailto:' + currentRequest?.email">
+                {{ currentRequest?.email }}
               </a>
               <q-icon name="verified" color="green"></q-icon>
             </q-item-label>
@@ -69,7 +69,7 @@ const rejectAccount = async () => {
     <q-card-section>
       <!-- center the image -->
       <div class="row justify-center">
-        <q-img :src="currentRequest.proof" style="width: 50%; height: 100%" />
+        <q-img :src="currentRequest?.proof" style="width: 50%; height: 100%" />
       </div>
     </q-card-section>
 

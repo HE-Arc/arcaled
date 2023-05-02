@@ -74,7 +74,10 @@ export const useStore = defineStore(storeName, {
       try {
         const formdata = new FormData();
 
-        formdata.append("lesson", `/lessons/${lesson.id}/`);
+        formdata.append(
+          "lesson",
+          `${import.meta.env.VITE_API_LOCATION}/lessons/${lesson.id}/`
+        );
         formdata.append("content", content);
 
         const response = await axios.post("/exams/", formdata);

@@ -1,79 +1,21 @@
 <script setup>
-import { RouterView } from "vue-router";
-import { storeToRefs } from "pinia";
-
-import { APP_NAME, FOOTER_TEXT } from "./../constants";
-import { useStore as useAuthStore } from "../store/auth.store";
-
-const authStore = useAuthStore();
-const { isAuthenticated, user } = storeToRefs(authStore);
+import AsyncAppLayout from "./AsyncAppLayout.vue";
 </script>
 
 <template>
-  <q-layout view="hHh lpR fFf">
-    <q-header elevated class="bg-primary text-white">
-      <q-toolbar>
-        <div class="row fit items-center">
-          <div class="col">
-            <q-toolbar-title>
-              <q-btn
-                flat
-                :to="{
-                  name: 'cps',
-                }"
-              >
-                {{ APP_NAME }}</q-btn
-              >
-            </q-toolbar-title>
-          </div>
+  <Suspense>
+    <template #default>
+      <AsyncAppLayout />
+    </template>
 
-          <div class="col-md-auto">
-            <q-toolbar-title>
-              <div v-if="isAuthenticated">Ratio 5</div>
-            </q-toolbar-title>
-          </div>
-          <div class="col row">
-            <q-space />
-            <div v-if="isAuthenticated">
-              <template v-if="user.is_admin">
-                <q-btn
-                  dense
-                  round
-                  flat
-                  icon="hourglass_top"
-                  class="q-ml-md"
-                  :to="{
-                    name: 'accounts-waiting',
-                  }"
-                >
-                  <q-badge color="red" floating>4</q-badge>
-                </q-btn>
-              </template>
-              <q-btn
-                flat
-                @click="authStore.logout"
-                :to="{
-                  name: 'login',
-                }"
-                icon="logout"
-              >
-              </q-btn>
-            </div>
-          </div>
-        </div>
-      </q-toolbar>
-    </q-header>
-
-    <q-page-container>
-      <RouterView />
-    </q-page-container>
-
-    <q-footer elevated class="bg-grey-8 text-white">
-      <q-toolbar>
-        <q-toolbar-title>
-          <div>{{ FOOTER_TEXT }}</div>
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-footer>
-  </q-layout>
+    <template #fallback>
+      <q-layout>
+        <q-page-container>
+          <q-page padding>
+            <q-spinner-dots size="5rem" />
+          </q-page>
+        </q-page-container>
+      </q-layout>
+    </template>
+  </Suspense>
 </template>

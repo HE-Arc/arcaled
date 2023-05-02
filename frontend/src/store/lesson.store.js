@@ -47,11 +47,17 @@ export const useStore = defineStore(storeName, {
       try {
         const formdata = new FormData();
 
-        //change year format to YYYY-MM-DD
+        console.log(new Date(year).toISOString().split("T")[0]);
 
-        formdata.append("branch", `/branches/${branch.id}/`);
-        formdata.append("teacher", `/teachers/${teacher.id}/`);
-        formdata.append("year", year.year);
+        formdata.append(
+          "branch",
+          `${import.meta.env.VITE_API_LOCATION}/branches/${branch.id}/`
+        );
+        formdata.append(
+          "teacher",
+          `${import.meta.env.VITE_API_LOCATION}/teachers/${teacher.id}/`
+        );
+        formdata.append("year", new Date(year).toISOString().split("T")[0]); //change year format to YYYY-MM-DD
 
         const response = await axios.post("/lessons/", formdata);
 

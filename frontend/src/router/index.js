@@ -107,11 +107,14 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   const requireAdmin = to.matched.some((record) => record.meta.requireAdmin);
+
   const authStore = useAuthStore();
-  const { isAuthenticated, user } = authStore;
+
+  const isAuthenticated = authStore.isAuthenticated;
+  const isAdmin = authStore.isAdmin;
 
   // redirige / vers /auth
   // if (to.path === "/") {
@@ -122,7 +125,7 @@ router.beforeEach((to, from, next) => {
   //     }
   // }
 
-  if (requireAdmin && !user.is_admin) {
+  if (requireAdmin && !isAdmin) {
     next({ name: "cps" });
   }
 

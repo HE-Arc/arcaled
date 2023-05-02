@@ -7,13 +7,15 @@ const defautSate = {
   loading: false,
   error: null,
   user: null,
-  isAuthenticated: false,
 };
 
 export const useStore = defineStore(storeName, {
   state: () => defautSate,
   persist: true, // ⚠️ persists state in localStorage
-  getters: {},
+  getters: {
+    isAuthenticated: (state) => !!state.user,
+    isAdmin: (state) => state.user?.is_admin,
+  },
   actions: {
     async login({ email, password }) {
       this.loading = true;
@@ -32,8 +34,6 @@ export const useStore = defineStore(storeName, {
           email: data.user.email,
           is_admin: data.user.is_admin,
         };
-        // ⚠️ should be after setting the user
-        this.isAuthenticated = true;
 
         Notify.create({
           message: "Connexion réussie",
@@ -54,7 +54,7 @@ export const useStore = defineStore(storeName, {
       }
     },
     async logout() {
-      if (!this.isAuthenticated) {
+      if (!this.user) {
         Notify.create({
           message: "Vous n'êtes pas connecté",
           color: "info",
@@ -87,7 +87,6 @@ export const useStore = defineStore(storeName, {
         });
         console.log(error);
       } finally {
-        this.isAuthenticated = false;
         this.user = null;
 
         this.loading = false;

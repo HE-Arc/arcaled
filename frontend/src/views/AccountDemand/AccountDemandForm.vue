@@ -2,6 +2,7 @@
 import { ref, computed } from "vue";
 import { useStore as useRequestsStore } from "../../store/requests.store";
 import { Notify } from "quasar";
+import { MAX_FILE_UPLOAD_SIZE } from "./../../constants";
 
 const requestsStore = useRequestsStore();
 
@@ -46,12 +47,13 @@ const onRejected = () => {
 
     <q-card-section>
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <!-- max file size 1MB = 1048576 bytes -->
         <q-file
           outlined
           v-model="proof"
           label="Photo visage + carte étudiante"
           accept=".png, .jpg, .jpeg"
-          max-file-size="1024"
+          :max-file-size="MAX_FILE_UPLOAD_SIZE"
           @rejected="onRejected"
         >
           <template v-slot:append>

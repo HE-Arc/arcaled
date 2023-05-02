@@ -14,8 +14,8 @@ import router from "../../router";
 
 const authStore = useAuthStore();
 
-const email = ref("django@he-arc.ch");
-const password = ref("Pa$$w0rd");
+const email = ref("lucas.perrin1@he-arc.ch");
+const password = ref("q9HfjQ6K4s");
 
 const formIsValid = computed(() => {
   return email.value && password.value;
@@ -27,8 +27,7 @@ const onSubmit = async () => {
       email: email.value,
       password: password.value,
     });
-
-    if (authStore.isAuthenticated) {
+    if (authStore.user) {
       router.push({ name: "app" });
     }
   }

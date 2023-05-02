@@ -13,6 +13,7 @@ import { storeToRefs } from "pinia";
 import { useStore as useLessonStore } from "../../store/lesson.store";
 import { useStore as useExamStore } from "../../store/exam.store";
 import { Notify } from "quasar";
+import { MAX_FILE_UPLOAD_SIZE } from "../../constants";
 
 const lessonStore = useLessonStore();
 const cpsStore = useExamStore();
@@ -130,12 +131,13 @@ const onRejected = () => {
             </template>
           </q-select>
 
+          <!-- max file size 1MB = 1048576 bytes -->
           <q-file
             outlined
             v-model="content"
             label="CP"
             accept="image/*, .pdf, .png, .jpg, .jpeg"
-            max-file-size="1024"
+            :max-file-size="MAX_FILE_UPLOAD_SIZE"
             @rejected="onRejected"
           >
             <template v-slot:append>
