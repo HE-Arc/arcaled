@@ -15,6 +15,7 @@ const { ratio } = storeToRefs(userStore);
 
 const numberOfRequests =
   (await requestsStore.accountsWaitingForValidation())?.length || 0;
+
 await userStore.fetchRatio();
 </script>
 
@@ -60,7 +61,7 @@ await userStore.fetchRatio();
                     name: 'accounts-waiting',
                   }"
                 >
-                  <q-badge color="red" floating>{{ numberOfRequests }}</q-badge>
+                  <q-badge color="red" floating></q-badge>
                 </q-btn>
               </template>
               <q-btn

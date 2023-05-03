@@ -82,8 +82,8 @@ def is_student(email):
     return False
 
 
-if __name__ == "__main__":
-    email = "lucas.perrin1@he-arc.ch"
-    #email = "sebastien.chappuis1@he-arc.ch"
-    #email = "sebastien.chappuis@he-arc.ch"
-    print(is_student(email))
+# if __name__ == "__main__":
+#     email = "lucas.perrin1@he-arc.ch"
+#     #email = "sebastien.chappuis1@he-arc.ch"
+#     #email = "sebastien.chappuis@he-arc.ch"
+#     print(is_student(email))

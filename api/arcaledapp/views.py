@@ -164,6 +164,10 @@ class AcceptAccessRequestView(APIView):
         # Return a response with the email and password of the new user
         return Response({
             'message': 'Access request accepted',
+            'user': {
+                'email': email,
+                'password': password,
+            }
         })
 
 
@@ -211,7 +215,7 @@ class AccessRequestViewSet(viewsets.ModelViewSet):
             return Response({'message': 'User already exists'}, status=400)
         # Create the access request
         self.perform_create(serializer)
-        return Response({'message': 'Access request created'})
+        return Response({'user': 'Access request created'})
 
 
 class BranchViewSet(viewsets.ModelViewSet):
