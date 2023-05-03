@@ -14,8 +14,8 @@ import router from "../../router";
 
 const authStore = useAuthStore();
 
-const email = ref("lucas.perrin1@he-arc.ch");
-const password = ref("q9HfjQ6K4s");
+const email = ref("");
+const password = ref("");
 
 const formIsValid = computed(() => {
   return email.value && password.value;
